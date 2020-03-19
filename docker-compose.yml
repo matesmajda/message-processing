@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+  kafka:
+    image: spotify/kafka
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    hostname: kafka
+    container_name: kafka
+    environment:
+      - "ADVERTISED_HOST=kafka"
+      - "ADVERTISED_PORT=9092"
+      - "AUTO_CREATE_TOPICS=true"
+    command: >
+      bash -c
+      "(sleep 15s &&
+      /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh
+      --create
+      --zookeeper
+      localhost:2181 --replication-factor 1 --partitions 1
+      --topic message_topic &) && (supervisord -n)"
+
+  kafka-ui:
+    image: sheepkiller/kafka-manager
+    ports:
+      - "9001:9000"
+    environment:
+      - "ZK_HOSTS=kafka:2181"
+      - "APPLICATION_SECRET=pass"
+    depends_on:
+      - kafka
+
+  message-sender:
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/message-sender
+    env_file: .env
+    volumes:
+      - ./message-sender/:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - kafka
+
