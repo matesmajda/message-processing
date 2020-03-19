@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class MessageService {
 
     @Autowired
-    private KafkaTemplate<String, String> template;
+    private KafkaTemplate<String, String> template2;
 
     void sendMessage(MessageRequest messageRequest) {
 
         String messageJson = new Gson().toJson(messageRequest);
-        template.send("myTopic", messageJson);
+        template2.send("message_topic", messageJson);
     }
 }
