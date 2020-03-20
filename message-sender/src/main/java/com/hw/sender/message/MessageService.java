@@ -2,7 +2,6 @@ package com.hw.sender.message;
 
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +9,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MessageService {
 
-    @Autowired
-    private KafkaTemplate<String, String> template2;
+    private KafkaTemplate<String, String> template;
+    private Gson messageSerializer;
 
-    void sendMessage(MessageRequest messageRequest) {
+    void sendMessage(Message message) {
 
-        String messageJson = new Gson().toJson(messageRequest);
-        template2.send("message_topic", messageJson);
+        String messageJson = messageSerializer.toJson(message);
+        template.send("message_topic5", messageJson);
     }
 }

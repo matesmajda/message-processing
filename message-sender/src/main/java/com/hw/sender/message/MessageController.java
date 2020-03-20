@@ -13,8 +13,8 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping(value = "/message", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addMessage(@RequestBody MessageRequest messageRequest) {
-        messageService.sendMessage(messageRequest);
+    public void addMessage(@RequestBody Message message) {
+        messageService.sendMessage(message);
     }
 
 }
