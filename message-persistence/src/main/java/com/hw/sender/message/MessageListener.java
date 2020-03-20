@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Component
 @Slf4j
+@AllArgsConstructor
 public class MessageListener {
+
+    private Gson messageDeserializer;
 
     @KafkaListener(topics = "message_topic5")
     public void addMessage(@RequestBody String message) {
-
-        Gson gson = new Gson();
-        Message m = gson.fromJson(message, Message.class);
+        Message m = messageDeserializer.fromJson(message, Message.class);
         log.info("Received message: {}", m);
     }
 }
