@@ -7,4 +7,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MessageService {
 
+    private MessageRepository messageRepository;
+
+    void saveMessage(Message message) {
+        messageRepository.save(message);
+    }
+
 }

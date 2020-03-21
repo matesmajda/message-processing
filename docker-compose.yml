@@ -57,6 +57,19 @@ services:
 #    depends_on:
 #      - kafka
 
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-username}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      PGDATA: /data/postgres
+      POSTGRES_DB: messages
+    #    volumes:
+#      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
   message-sender:
     build:
       dockerfile: Dockerfile

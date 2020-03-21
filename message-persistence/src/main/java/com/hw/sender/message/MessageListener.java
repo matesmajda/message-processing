@@ -17,9 +17,12 @@ public class MessageListener {
 
     private Gson messageDeserializer;
 
+    private MessageService messageService;
+
     @KafkaListener(topics = "message_topic5")
-    public void addMessage(@RequestBody String message) {
-        Message m = messageDeserializer.fromJson(message, Message.class);
-        log.info("Received message: {}", m);
+    public void addMessage(@RequestBody String messageJson) {
+        log.info("Received message: {}", messageJson);
+        Message message = messageDeserializer.fromJson(messageJson, Message.class);
+        messageService.saveMessage(message);
     }
 }
