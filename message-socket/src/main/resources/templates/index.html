@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script type="text/javascript">
+        var stompClient;
+
+        $(document).ready(function() {
+            var socket = new SockJS('/app');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function() {
+                stompClient.subscribe('/topic/messages', function(message) {
+                    var m = JSON.parse(message.body);
+                    addMessage(m)
+                });
+            });
+        });
+
+        function addMessage(message) {
+            var date = new Date(message.timestamp).toLocaleString();
+            var dateElement = $('<span class="date"></span>').append(date);
+            var textElement = $('<b class="text ml-2"></b>').append(message.content);
+
+            var element = $('<div class="alert alert-success"></div>').append(dateElement).append(textElement);
+            $('#messages-container').prepend(element);
+        }
+
+        function sendMessage() {
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8080/message',
+                data: JSON.stringify({
+                    content: $("#content").val(),
+                    timestamp: $("#timestamp").val()
+                }),
+                error: function(e) {
+                    alert(e.responseText); console.log(e)
+                },
+                contentType: "application/json"
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container mb-5">
+        <form>
+            <div class="form-group my-4">
+                <label for="content">Content</label>
+                <input type="text" class="form-control" id="content" placeholder="Content" value="Sample content">
+            </div>
+            <div class="form-group">
+                <label for="timestamp">Timestamp</label>
+                <input type="text" class="form-control" id="timestamp" placeholder="Content" value="2020-03-20 12:12:12+0000">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="sendMessage()">Send 🙏</button>
+        </form>
+
+        <div class="my-3">
+            <div>
+                <h3 class="text-center">New messages 👀</h3>
+            </div>
+            <hr/>
+            <div id="messages-container">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
