@@ -1,0 +1,11 @@
+server:
+  port: 8080
+dateformat: yyyy-MM-dd HH:mm:ssZ
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      bootstrap-servers: kafka:9092
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true

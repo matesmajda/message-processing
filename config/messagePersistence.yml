@@ -1,0 +1,20 @@
+server:
+  port: 8081
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQLDialect
+spring:
+  datasource:
+    password: password
+    url: jdbc:postgresql://postgres:5432/messages
+    username: username
+  jpa:
+    hibernate:
+      ddl-auto: create
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: kafka:9092
+      group-id: message-persistence
+    listener:
+      missing-topics-fatal: false

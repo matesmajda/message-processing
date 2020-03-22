@@ -1,0 +1,11 @@
+server:
+  port: 8083
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: kafka:9092
+      group-id: message-socket
+    listener:
+      missing-topics-fatal: false

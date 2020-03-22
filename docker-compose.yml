@@ -5,6 +5,7 @@ services:
   zookeeper:
     container_name: zookeeper
     image: wurstmeister/zookeeper:latest
+    restart: always
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
@@ -46,6 +47,15 @@ services:
       JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
     depends_on:
       - kafka
+
+  configserver:
+    image: hyness/spring-cloud-config-server
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+    volumes:
+      - ./config:/config
 
 #  kafka-ui:
 #    image: sheepkiller/kafka-manager
