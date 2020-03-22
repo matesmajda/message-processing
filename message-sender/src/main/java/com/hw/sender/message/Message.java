@@ -2,6 +2,7 @@ package com.hw.sender.message;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Data
+@Builder
 class Message {
 
     @NotNull
