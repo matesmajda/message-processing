@@ -19,7 +19,7 @@ public class MessageListener {
 
     private MessageService messageService;
 
-    @KafkaListener(topics = "message_topic5")
+    @KafkaListener(topics = "${message.topic}")
     public void addMessage(@RequestBody String messageJson) {
         log.info("Received message: {}", messageJson);
         Message message = messageDeserializer.fromJson(messageJson, Message.class);

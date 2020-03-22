@@ -31,7 +31,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_MESSAGE_MAX_BYTES: 2000000
-      KAFKA_CREATE_TOPICS: "message_topic5:1:1"
+      KAFKA_CREATE_TOPICS: "messages:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:

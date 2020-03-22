@@ -18,7 +18,7 @@ public class CustomInstantDeserializer extends JsonDeserializer<Instant> {
 
     private final DateTimeFormatter dateFormatter;
 
-    public CustomInstantDeserializer(@Value("${dateformat}") String dateFormat) {
+    public CustomInstantDeserializer(@Value("${message.dateformat}") String dateFormat) {
         dateFormatter = ofPattern(dateFormat);
     }
 

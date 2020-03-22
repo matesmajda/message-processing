@@ -20,7 +20,7 @@ public class MessageListener {
     private Gson messageDeserializer;
     private SimpMessagingTemplate template;
 
-    @KafkaListener(topics = "message_topic5")
+    @KafkaListener(topics = "${message.topic}")
     public void addMessage(@RequestBody String messageJson) {
         log.info("Received message: {}", messageJson);
         Message message = messageDeserializer.fromJson(messageJson, Message.class);
