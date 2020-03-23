@@ -16,13 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageListener {
 
     private Gson messageDeserializer;
-
     private MessageService messageService;
 
     @KafkaListener(topics = "${message.topic}")
     public void addMessage(@RequestBody String messageJson) {
         log.info("Received message: {}", messageJson);
-        Message message = messageDeserializer.fromJson(messageJson, Message.class);
+
+        Message message;
+        try {
+            message = messageDeserializer.fromJson(messageJson, Message.class);
+        } catch (Exception e) {
+            log.error("Failed to deserialize message. Exception:", e);
+            return;
+        }
         messageService.saveMessage(message);
     }
 }

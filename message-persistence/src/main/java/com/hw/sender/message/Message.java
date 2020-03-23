@@ -1,5 +1,6 @@
 package com.hw.sender.message;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@Builder
 class Message {
 
     @Id
