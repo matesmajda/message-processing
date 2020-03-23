@@ -9,3 +9,6 @@ spring:
       group-id: message-socket
     listener:
       missing-topics-fatal: false
+websocket:
+  destination:
+    messages: /topic/messages
