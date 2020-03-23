@@ -10,10 +10,7 @@ public class MessageEnricher {
     private PalindromeCalculator palindromeCalculator;
 
     EnrichedMessage enrichMessage(Message message) {
-        return EnrichedMessage.builder()
-                .longestPalindromeSize(palindromeCalculator.getLongestPalindromeSize(message.getContent()))
-                .content(message.getContent())
-                .timestamp(message.getTimestamp()).build();
-
+        Integer longestPalindromeSize = palindromeCalculator.getLongestPalindromeSize(message.getContent());
+        return EnrichedMessage.of(message, longestPalindromeSize);
     }
 }

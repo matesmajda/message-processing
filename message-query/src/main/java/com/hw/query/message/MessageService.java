@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class MessageService {
 
     private MessageRepository messageRepository;
-
     private MessageEnricher messageEnricher;
 
     Page<EnrichedMessage> getPage(Integer pageNumber, Integer pageSize) {
