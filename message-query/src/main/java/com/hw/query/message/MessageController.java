@@ -18,7 +18,7 @@ public class MessageController {
     private MessageService messageService;
 
     @GetMapping(value = "/message")
-    public Page<Message> getMessages(
+    public Page<EnrichedMessage> getMessages(
             @RequestParam("pageNumber") @NotNull @Positive Integer pageNumber,
             @RequestParam("pageSize") @NotNull @Positive Integer pageSize) {
         return messageService.getPage(pageNumber, pageSize);

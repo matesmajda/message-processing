@@ -17,13 +17,15 @@ public class MessageService {
 
     private MessageEnricher messageEnricher;
 
-    Page<Message> getPage(Integer pageNumber, Integer pageSize) {
+    Page<EnrichedMessage> getPage(Integer pageNumber, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         Page<Message> messages = messageRepository.findAll(pageRequest);
 
-        List<Message> enrichedMessages = messages.getContent().stream().map(m->messageEnricher.enrichMessage(m)).collect(Collectors.toList());
+        return new PageImpl<>(enrichMessages(messages), pageRequest, messages.getTotalElements());
+    }
 
-        return new PageImpl<>(enrichedMessages, pageRequest, messages.getTotalElements());
+    private List<EnrichedMessage> enrichMessages(Page<Message> messages) {
+        return messages.getContent().stream().map(m -> messageEnricher.enrichMessage(m)).collect(Collectors.toList());
     }
 
 }
