@@ -1,0 +1,12 @@
+server:
+  port: 8082
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQLDialect
+spring:
+  datasource:
+    username: username
+    password: password
+    url: jdbc:postgresql://postgres:5432/messages
+  jpa:
+    hibernate:
+      ddl-auto: create
