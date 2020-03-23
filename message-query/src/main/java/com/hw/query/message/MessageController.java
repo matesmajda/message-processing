@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -19,7 +20,7 @@ public class MessageController {
 
     @GetMapping(value = "/message")
     public Page<EnrichedMessage> getMessages(
-            @RequestParam("pageNumber") @NotNull @Positive Integer pageNumber,
+            @RequestParam("pageNumber") @NotNull @Min(0) Integer pageNumber,
             @RequestParam("pageSize") @NotNull @Positive Integer pageSize) {
         return messageService.getPage(pageNumber, pageSize);
     }
