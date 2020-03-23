@@ -1,4 +1,4 @@
-package com.hw.sender.view;
+package com.hw.socket.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

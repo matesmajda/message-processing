@@ -1,4 +1,4 @@
-package com.hw.sender.config;
+package com.hw.socket.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

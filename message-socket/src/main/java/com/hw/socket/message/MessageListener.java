@@ -1,4 +1,4 @@
-package com.hw.sender.message;
+package com.hw.socket.message;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +23,15 @@ public class MessageListener {
     }
 
     @KafkaListener(topics = "${message.topic}")
-    public void addMessage(@RequestBody String messageJson) {
+    public void messageReceived(@RequestBody String messageJson) {
         log.info("Received message: {}", messageJson);
-        Message message = messageDeserializer.fromJson(messageJson, Message.class);
+        Message message;
+        try {
+            message = messageDeserializer.fromJson(messageJson, Message.class);
+        } catch (Exception e) {
+            log.error("Ignoring invalid message", e);
+            return;
+        }
         template.convertAndSend(wsDestination, message);
     }
 }

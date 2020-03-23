@@ -1,4 +1,4 @@
-package com.hw.sender;
+package com.hw.socket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

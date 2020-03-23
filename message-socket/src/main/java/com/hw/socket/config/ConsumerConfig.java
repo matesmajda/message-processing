@@ -1,4 +1,4 @@
-package com.hw.sender.config;
+package com.hw.socket.config;
 
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
