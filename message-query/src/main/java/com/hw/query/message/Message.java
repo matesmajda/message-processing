@@ -1,7 +1,7 @@
 package com.hw.query.message;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @SuperBuilder
+@NoArgsConstructor
 class Message {
 
     @Id

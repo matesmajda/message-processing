@@ -1,6 +1,9 @@
 package com.hw.query.message;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import static com.hw.query.config.CachingConfig.PALINDROME_CACHE;
 
 @Service
 public class PalindromeCalculator {
@@ -11,6 +14,7 @@ public class PalindromeCalculator {
      * The algorithm iterates over all characters of the string,
      * and looks for the longest palindrome with the current character in the center of it.
      */
+    @Cacheable(value = PALINDROME_CACHE, condition = "#original.length() > 10", unless = "#result < 2")
     public Integer getLongestPalindromeSize(String original) {
 
         if (original == null || original.length() == 0) {
