@@ -80,24 +80,53 @@ services:
       - "5432:5432"
     restart: unless-stopped
 
-#  message-sender:
-#    build:
-#      dockerfile: Dockerfile
-#      context: ./docker/message-sender
-#    env_file: .env
-#    volumes:
-#      - ./message-sender/:/app
-#    ports:
-#      - 8080:8080
-#    depends_on:
-#      - kafka
-#
-#  message-persistence:
-#    build:
-#      dockerfile: Dockerfile
-#      context: ./docker/message-persistence
-#    env_file: .env
-#    volumes:
-#      - ./message-persistence/:/app
-#    depends_on:
-#      - kafka
+  message-sender:
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/message-sender
+    env_file: .env
+    volumes:
+      - ./message-sender/:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - kafka
+      - configserver
+
+  message-persistence:
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/message-persistence
+    env_file: .env
+    volumes:
+      - ./message-persistence/:/app
+    depends_on:
+      - kafka
+      - postgres
+      - configserver
+
+  message-query:
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/message-query
+    env_file: .env
+    volumes:
+      - ./message-query/:/app
+    ports:
+      - 8082:8082
+    depends_on:
+      - postgres
+      - configserver
+
+  message-socket:
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/message-socket
+    env_file: .env
+    volumes:
+      - ./message-socket/:/app
+    ports:
+      - 8083:8083
+    depends_on:
+      - kafka
+      - configserver
