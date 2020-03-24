@@ -49,7 +49,8 @@ Acts as a message broker
 Stores messages. Postgres db is used for the sake of simplicity.
 
 #### 7. Config server
-Cloud config for each application
+Cloud config for each application.  
+Retry policy is turned on in all components if the config server is not available on startup.
 
 ### Message model
 
