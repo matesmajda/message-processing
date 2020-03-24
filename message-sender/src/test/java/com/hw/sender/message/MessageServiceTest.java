@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 
-import java.time.Instant;
+import java.util.Date;
 
 @ExtendWith(MockitoExtension.class)
 class MessageServiceTest {
@@ -29,7 +29,7 @@ class MessageServiceTest {
 
     @Test
     void messageIsSentToTopic() {
-        Message message = Message.builder().content("content").timestamp(Instant.now()).build();
+        Message message = Message.builder().content("content").timestamp(new Date()).build();
         String serializedMessage = serializer.toJson(message);
         messageService.sendMessage(message);
 

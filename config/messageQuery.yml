@@ -10,6 +10,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-  jackson:
-    property-naming-strategy: SNAKE_CASE
-    date-format: yyyy-MM-dd HH:mm:ssZ

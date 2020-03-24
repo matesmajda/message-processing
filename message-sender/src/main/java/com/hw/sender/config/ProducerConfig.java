@@ -6,9 +6,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-
-import java.time.Instant;
+import java.util.Date;
 
 @Configuration
 public class ProducerConfig {
@@ -16,6 +14,6 @@ public class ProducerConfig {
     @Bean
     public Gson messageSerializer() {
         return new GsonBuilder()
-                .registerTypeAdapter(Instant.class, (JsonSerializer<Instant>) (date, type, jsonSerializationContext) -> new JsonPrimitive(date.toEpochMilli())).create();
+                .registerTypeAdapter(Date.class, (JsonSerializer<Date>) (date, type, jsonSerializationContext) -> new JsonPrimitive(date.getTime())).create();
     }
 }

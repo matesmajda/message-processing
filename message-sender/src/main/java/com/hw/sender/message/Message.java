@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.Date;
 
 @Data
 @Builder
@@ -18,7 +19,6 @@ class Message {
     private String content;
 
     @NotNull
-    @JsonDeserialize(using = CustomInstantDeserializer.class)
     @ApiModelProperty(example = "2020-03-20 11:11:11+0000")
-    private Instant timestamp;
+    private Date timestamp;
 }
