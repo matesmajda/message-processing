@@ -81,11 +81,9 @@ services:
     restart: unless-stopped
 
   message-sender:
-    build:
-      dockerfile: Dockerfile
-      context: ./docker/message-sender
-    volumes:
-      - ./message-sender/:/app
+    build: ./message-sender
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     ports:
       - 8080:8080
     depends_on:
@@ -93,9 +91,7 @@ services:
       - configserver
 
   message-persistence:
-    build:
-      dockerfile: Dockerfile
-      context: ./docker/message-persistence
+    build: ./message-persistence
     volumes:
       - ./message-persistence/:/app
     depends_on:
@@ -104,9 +100,7 @@ services:
       - configserver
 
   message-query:
-    build:
-      dockerfile: Dockerfile
-      context: ./docker/message-query
+    build: ./message-query
     volumes:
       - ./message-query/:/app
     ports:
@@ -116,9 +110,7 @@ services:
       - configserver
 
   message-socket:
-    build:
-      dockerfile: Dockerfile
-      context: ./docker/message-socket
+    build: ./message-socket
     volumes:
       - ./message-socket/:/app
     ports:
