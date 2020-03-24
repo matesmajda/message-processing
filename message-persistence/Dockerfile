@@ -4,6 +4,7 @@ ENV APP_HOME=/app/
 WORKDIR $APP_HOME
 
 COPY build.gradle settings.gradle gradlew $APP_HOME
+RUN chmod +x gradlew
 COPY gradle $APP_HOME/gradle
 COPY src $APP_HOME/src
 RUN ./gradlew --no-daemon bootJar
