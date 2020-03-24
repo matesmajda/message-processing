@@ -1,11 +1,11 @@
 # message-processing
 
-This project is a simple message processing pipeline using Kafka as the main message broker.  
+This project is a simple message processing pipeline using Spring Boot components and Kafka as the main message broker and a PostgreSQL db for message persistence.  
 The major components are:
 - message-sender: exposes a REST api to send new messages to the kafka topic
 - message-socket: exposes a WS api to get messages from kafka with a simple ui
 - message-persistence: listens for messages and persists them into a postgres db
-- message-query: exposes a REST api to query the postgres db. It also enriches the messages.
+- message-query: exposes a REST api to query the postgres db. It also enriches the messages and use caching.
 
 These components are standalone Spring boot applications built with gradle using Java 11.  
 I did not create a parent gradle project because in a real-world system these components would be in separate repositories.  
@@ -68,7 +68,7 @@ Message returned by the message-query api:
 - `longest_palindrome_size` is added to the response calculated based on the `content` field
 
 ### Monitoring
-kafdrop: http://localhost:9001
+kafdrop: http://localhost:9001  
 kafka-ui: http://localhost:9002
 
 ### Possible improvements
@@ -77,9 +77,10 @@ kafka-ui: http://localhost:9002
 - Improve error handling
 - Create integration tests
 - Creating stress/performance tests
-- Fine tuning component components
+- Fine tuning components
 - Moving common classes to a separate repository, using it as a dependency
 - Message versioning
 - Add retry policy to consumers
 - Add sql schema migration tool, or switch to nosql db for storing messages
 - Add centralized logging
+- Using .env file for docker
