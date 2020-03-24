@@ -9,12 +9,12 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
-      - "2181:2181"
+      - 2181:2181
 
   kafka:
     image: wurstmeister/kafka:2.12-2.2.1
     ports:
-      - "9092:9092"
+      - 9092:9092
     environment:
       KAFKA_ADVERTISED_LISTENERS: >-
         LISTENER_DOCKER_INTERNAL://kafka:19092,
@@ -39,9 +39,8 @@ services:
 
   kafdrop:
     image: obsidiandynamics/kafdrop
-    restart: "no"
     ports:
-      - "9001:9000"
+      - 9001:9000
     environment:
       KAFKA_BROKERCONNECT: "kafka:9092"
       JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
@@ -51,7 +50,7 @@ services:
   configserver:
     image: hyness/spring-cloud-config-server
     ports:
-      - "8888:8888"
+      - 8888:8888
     environment:
       - SPRING_PROFILES_ACTIVE=native
     volumes:
@@ -60,24 +59,22 @@ services:
   kafka-ui:
     image: sheepkiller/kafka-manager
     ports:
-      - "9002:9000"
+      - 9002:9000
     environment:
-      - "ZK_HOSTS=zookeeper:2181"
-      - "APPLICATION_SECRET=pass"
+      - ZK_HOSTS=zookeeper:2181
+      - APPLICATION_SECRET=pass
     depends_on:
       - kafka
 
   postgres:
     image: postgres
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-username}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
       POSTGRES_DB: messages
-    #    volumes:
-#      - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - 5432:5432
     restart: unless-stopped
 
   message-sender:
@@ -92,8 +89,8 @@ services:
 
   message-persistence:
     build: ./message-persistence
-    volumes:
-      - ./message-persistence/:/app
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - kafka
       - postgres
@@ -101,8 +98,8 @@ services:
 
   message-query:
     build: ./message-query
-    volumes:
-      - ./message-query/:/app
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     ports:
       - 8082:8082
     depends_on:
@@ -111,8 +108,8 @@ services:
 
   message-socket:
     build: ./message-socket
-    volumes:
-      - ./message-socket/:/app
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     ports:
       - 8083:8083
     depends_on:
