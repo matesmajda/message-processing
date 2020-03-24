@@ -10,3 +10,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    property-naming-strategy: SNAKE_CASE
+    date-format: yyyy-MM-dd HH:mm:ssZ
